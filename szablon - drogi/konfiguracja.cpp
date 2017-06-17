@@ -25,8 +25,8 @@
 											// Funkcjê mo¿na wywo³ywac wielokrotnie dla ró¿nych obszarów
 
 	
-	rejestrujPrzeszkode(-30,-40,-10,-20);
-	rejestrujPrzeszkode(-30,0,-10,20);
+	//rejestrujPrzeszkode(-30,-40,-10,-20);
+	//rejestrujPrzeszkode(-30,0,-10,20);
 
 
 	/******************************************************/

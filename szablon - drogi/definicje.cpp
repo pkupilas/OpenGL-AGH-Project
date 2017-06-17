@@ -28,13 +28,18 @@
 	bool kierunek = true;
 	float predkosc = 0.35;
 
+	// PIGS -----------------------------
+	float pigVelocity = 0.1;
+	float pigAngle = 0.1;
+	bool pigTurn = false;
+	float pigPosition = 1.0;
+	enum PigDirection { FRONT, BACK };
+	PigDirection pigDir = FRONT;
+	// PIGS -----------------------------
+
+
+
+
 	/******************************************************/
-
-	float firstBoneX = 0;
-	float boneVelocity = 0.1;
-
-	enum BoneDirection { FRONT, BACK};
-	BoneDirection boneDir = FRONT;
-
 #undef _DEFINICJE
 #endif
