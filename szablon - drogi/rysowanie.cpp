@@ -17,15 +17,15 @@ C++ przez OpenGL - szablon do æwiczeñ laboratoryjnych
 // Wymagany format pliku: bmp, 24 bity na pixel.
 
 glPushMatrix();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 glTranslatef(0, 1, 0);
 rysujModel("teren"); // malowanie pod³o¿a
 //rysujModel("niebo"); // malowanie nieba
-=======
-	glTranslatef(0, 1, 0);
-	rysujModel("teren"); // malowanie pod³o¿a
-	rysujModel("niebo"); // malowanie nieba
->>>>>>> f8d6ca28332421e0793189fb183d240746b15220
+//=======
+//	glTranslatef(0, 1, 0);
+//	rysujModel("teren"); // malowanie pod³o¿a
+//	rysujModel("niebo"); // malowanie nieba
+//>>>>>>> f8d6ca28332421e0793189fb183d240746b15220
 glPopMatrix();
 
 
