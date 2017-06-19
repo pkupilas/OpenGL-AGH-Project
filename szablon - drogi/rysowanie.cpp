@@ -558,9 +558,28 @@ glPushMatrix();
 glPopMatrix();
 /*------------------------ TENTS ------------------------*/
 
+/*------------------------ MILL HOUSE ------------------------*/
+glPushMatrix();
+glScalef(5, 5, 5);
+glTranslatef(-1, -1, -25);
+glRotatef(-90, 0, 1, 0);
 
+	rysujModel("mill_2");
 
+glPopMatrix();
+/*------------------------ MILL HOUSE ------------------------*/
 
+/*------------------------ MILL Rotator ------------------------*/
+glPushMatrix();
+glScalef(4, 4, 4);
+glTranslatef(-3.3, 9.2, -29.5);
+glRotatef(-90, 0, 1, 0);
+glRotatef(angPig[0], 1, 0, 0);
+
+rysujModel("rotator_2");
+
+glPopMatrix();
+/*------------------------ MILL Rotator ------------------------*/
 
 
 /******************************************************/
