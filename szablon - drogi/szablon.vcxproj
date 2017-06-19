@@ -46,11 +46,15 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\OpenGL\AGH\B3\OpenGL-AGH-Project\szablon - drogi\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\OpenGL\AGH\B3\OpenGL-AGH-Project\szablon - drogi\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\OpenGL\AGH\B3\OpenGL-AGH-Project\szablon - drogi\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\OpenGL\AGH\B3\OpenGL-AGH-Project\szablon - drogi\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -76,7 +80,7 @@
       <Culture>0x0410</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;opengl32.lib;glu32.lib;glut32.lib;glaux.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;legacy_stdio_definitions.lib;opengl32.lib;glu32.lib;glut32.lib;glaux.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Debug/szablon.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -85,6 +89,8 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libc.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -116,7 +122,7 @@
       <Culture>0x0410</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;glaux.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;legacy_stdio_definitions.lib;glaux.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Release/szablon.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\Release/szablon.pdb</ProgramDatabaseFile>
@@ -124,6 +130,8 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libc.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -133,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="definicje.cpp" />
     <ClCompile Include="interakcja.cpp" />
+    <ClCompile Include="JPEG.cpp" />
     <ClCompile Include="konfiguracja.cpp" />
     <ClCompile Include="model3DS.cpp" />
     <ClCompile Include="rysowanie.cpp" />
@@ -141,6 +150,9 @@
     <ClCompile Include="textureTGA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\JPEG.h" />
+    <ClInclude Include="includes\jpeglib.h" />
+    <ClInclude Include="includes\Main.h" />
     <ClInclude Include="model3DS.h" />
     <ClInclude Include="textureBMP.h" />
     <ClInclude Include="textureTGA.h" />

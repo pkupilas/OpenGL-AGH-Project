@@ -13,15 +13,29 @@
 #include <time.h>
 #include <direct.h>
 
+#include <Main.h>
+#include <math.h>	
+
+
+
+
 
 //#include <GL/glaux.h>
 //#define GLUTCHECKLOOP
+
 	
 // Wymiary okna
 int oknoSzerkosc=800;
 int oknoWysokosc=600;
 bool oknoFullScreen = false;
 GLint oknoLewe = 1, oknoPrawe = 2;      // id okien stereo 
+
+UINT SkyboxTexture[12];
+float rotateSky = 0.0f;
+float lightDay = 1.0f;
+float lightNight = 0.0f;
+float timeOfDay = 1.0f;
+
 
 // Opcje projekcji stereo
 int stereoTryb = 0;
@@ -163,14 +177,12 @@ void windowInit()
 	glEnable(GL_DEPTH_TEST); 
 	glPolygonMode (GL_FRONT_AND_BACK, GL_FILL); 
 	glEnable(GL_LIGHTING);
-	GLfloat  ambient[4] = {0.3,0.3,0.3,1};
+	GLfloat  ambient[4] = {0.3,0.3,0.3,0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambient); 
-	GLfloat  ambientLight[4] = {0.3,0.3,0.3,1};
-	GLfloat  specularLight[4] = {1.0,1.0,1.0,1};
-	GLfloat  diffuseLight[4] = {1,1,1,1};
+	GLfloat  ambientLight[4] = {0.3,0.3,0.3,0};
+	GLfloat  specularLight[4] = {1.0,1.0,1.0,0};
+	GLfloat  diffuseLight[4] = {1,1,1,0};
 	GLfloat	 lightPos0[4] = {30,30,-30,1};
-	glLightfv(GL_LIGHT0,GL_POSITION,lightPos0);
-	glEnable(GL_LIGHT0);  // œwiatlo sceny
 
 	/*******************MGLA**************************/
 
@@ -180,7 +192,7 @@ void windowInit()
 	glFogf(GL_FOG_DENSITY, 0.005f); 
 	glFogf(GL_FOG_START, 0.0f); 
 	glFogf(GL_FOG_END, 100.0f); 
-	glEnable(GL_FOG);  
+	//glEnable(GL_FOG);  
 
 }
 
@@ -299,6 +311,31 @@ void rysujRamke(bool prawa)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Kasowanie ekranu
 	glLoadIdentity();
+	glClearDepth(1.0f);									// Depth Buffer Setup
+	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+
+	// Load the Skybox textures
+	JPEG_Skybox(SkyboxTexture, "data/texture/front.jpg", SKYFRONT);
+	JPEG_Skybox(SkyboxTexture, "data/texture/back.jpg", SKYBACK);
+	JPEG_Skybox(SkyboxTexture, "data/texture/left.jpg", SKYLEFT);
+	JPEG_Skybox(SkyboxTexture, "data/texture/right.jpg", SKYRIGHT);
+	JPEG_Skybox(SkyboxTexture, "data/texture/up.jpg", SKYUP);
+	JPEG_Skybox(SkyboxTexture, "data/texture/down.jpg", SKYDOWN);
+	JPEG_Skybox(SkyboxTexture, "data/texture/front2.jpg", SKYFRONT2);
+	JPEG_Skybox(SkyboxTexture, "data/texture/back2.jpg", SKYBACK2);
+	JPEG_Skybox(SkyboxTexture, "data/texture/left2.jpg", SKYLEFT2);
+	JPEG_Skybox(SkyboxTexture, "data/texture/right2.jpg", SKYRIGHT2);
+	JPEG_Skybox(SkyboxTexture, "data/texture/up2.jpg", SKYUP2);
+	JPEG_Skybox(SkyboxTexture, "data/texture/down2.jpg", SKYDOWN2);
+
+	
 	switch (stereoTryb){
 		case 0: // zwykle mono
 			 gluLookAt (kameraX,kameraY,kameraZ,kameraX + 100*sin(kameraKat),3 + kameraPunktY	,kameraZ - 100*cos(kameraKat),0,1,0); // kamera
@@ -322,6 +359,57 @@ void rysujRamke(bool prawa)
 
 	#define _RYSOWANIE
 	#include "rysowanie.cpp"	// rysowanie 
+
+	GLfloat	 lightPos0[4] = { 30,30,-30,1 };
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT0);  // œwiatlo sceny
+	GLfloat light_ambient[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse[] = { lightDay, lightDay, lightDay, lightDay };
+	GLfloat light_specular[] = { lightDay, lightDay, lightDay, lightDay };
+	GLfloat light_position[] = { 30,30,-30,1 };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT1);  // œwiatlo sceny
+						  //	cycleLight -= 0.01f;
+	GLfloat light_ambient1[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse1[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specular1[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position1[] = { 30,30,-30,1 };
+	GLfloat spot_direction1[] = { -1.0, -1.0, 0.0 };
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse1);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular1);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction1);
+
+	lightDay = (sin(timeOfDay) / 2) + 0.5f;
+	lightNight = 1.0 - lightDay;
+	timeOfDay += 0.05;
+
+	Draw_Skybox(0, 0, 0, 500, 500, 500);	// Draw the Skybox
+	
+	glDeleteTextures(1, &SkyboxTexture[SKYBACK]);
+	glDeleteTextures(1, &SkyboxTexture[SKYBACK2]);
+	glDeleteTextures(1, &SkyboxTexture[SKYDOWN]);
+	glDeleteTextures(1, &SkyboxTexture[SKYDOWN2]);
+	glDeleteTextures(1, &SkyboxTexture[SKYFRONT]);
+	glDeleteTextures(1, &SkyboxTexture[SKYFRONT2]);
+	glDeleteTextures(1, &SkyboxTexture[SKYLEFT]);
+	glDeleteTextures(1, &SkyboxTexture[SKYLEFT2]);
+	glDeleteTextures(1, &SkyboxTexture[SKYRIGHT]);
+	glDeleteTextures(1, &SkyboxTexture[SKYRIGHT2]);
+	glDeleteTextures(1, &SkyboxTexture[SKYUP]);
+	glDeleteTextures(1, &SkyboxTexture[SKYUP2]);
+
 
 	glFlush(); 
     glPopMatrix();
@@ -422,6 +510,9 @@ int main(int argc, char **argv)
 		glutMouseFunc (PrzyciskMyszyWcisniety); 			// def. obs³ugi zdarzenia przycisku myszy (GLUT)
 		glutMotionFunc (RuchKursoraMyszy);					// def. obs³ugi zdarzenia ruchu myszy (GLUT)
 		glutDisplayFunc(rysuj);								// def. funkcji rysuj¹cej
+
+
+
 	} else {  // jedno okno
 		glutInitWindowSize(oknoSzerkosc,oknoWysokosc);
 		glutInitWindowPosition(0,0);
@@ -446,4 +537,144 @@ int main(int argc, char **argv)
 		if (oknoFullScreen && stereoTryb != 2) glutFullScreen();
 		glutMainLoop();        
 	return(0);    
+}
+
+void Draw_Skybox(float x, float y, float z, float width, float height, float length)
+{
+	// Center the Skybox around the given x,y,z position
+	x = x - width / 2;
+	y = y - 400;
+	z = z - length / 2;
+
+	float offset = -2.0f;
+	float offsetXYZ = 1.0f;
+	float x2 = x + offsetXYZ;
+	float y2 = y + offsetXYZ;
+	float z2 = z + offsetXYZ;
+	float width2 = width + offset;
+	float height2 = height + offset;
+	float length2 = length + offset;
+
+	glPushMatrix();
+	glRotatef(rotateSky, 0.0f, 1.0f, 0.0f);
+	//////////////////Nigh Skybox////////////////////////
+	// Draw Front side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYFRONT]);
+glDisable(GL_LIGHTING);
+	glBegin(GL_QUADS);
+	glColor4f(1.0, 1.0, 1.0, lightNight);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z + length);
+	glEnd();
+
+
+	// Draw Back side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYBACK]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+	glEnd();
+
+	// Draw Left side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYLEFT]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + length);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);
+	glEnd();
+
+	// Draw Right side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYRIGHT]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z);
+	glEnd();
+
+	// Draw Up side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYUP]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+	glEnd();
+
+	// Draw Down side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYDOWN]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z);
+	glEnd();
+
+	//////////////////DAY Skybox////////////////////////
+	// Draw Front side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYFRONT2]);
+	glBegin(GL_QUADS);
+	glColor4f(1.0, 1.0, 1.0, lightDay);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2, y2, z2 + length2);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2, y2 + height2, z2 + length2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2 + width2, y2 + height2, z2 + length2);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2 + width2, y2, z2 + length2);
+	glEnd();
+
+
+	// Draw Back side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYBACK2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2 + width2, y2, z2);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2 + width2, y2 + height2, z2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2, y2 + height2, z2);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2, y2, z2);
+	glEnd();
+
+	// Draw Left side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYLEFT2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2, y2 + height2, z2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2, y2 + height2, z2 + length2);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2, y2, z2 + length2);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2, y2, z2);
+	glEnd();
+
+	// Draw Right side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYRIGHT2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2 + width2, y2, z2);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2 + width2, y2, z2 + length2);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2 + width2, y2 + height2, z2 + length2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2 + width2, y2 + height2, z2);
+	glEnd();
+
+	// Draw Up side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYUP2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2 + width2, y2 + height2, z2);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2 + width2, y2 + height2, z2 + length2);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2, y2 + height2, z2 + length2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2, y2 + height2, z2);
+	glEnd();
+
+	// Draw Down side
+	glBindTexture(GL_TEXTURE_2D, SkyboxTexture[SKYDOWN2]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x2, y2, z2);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x2, y2, z2 + length2);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x2 + width2, y2, z2 + length2);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x2 + width2, y2, z2);
+	glEnd();
+	glEnable(GL_LIGHTING);
+
+	glPopMatrix();
+	
+	rotateSky += 0.1f;
+
 }

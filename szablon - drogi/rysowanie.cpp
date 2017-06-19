@@ -19,7 +19,7 @@ C++ przez OpenGL - szablon do æwiczeñ laboratoryjnych
 glPushMatrix();
 glTranslatef(0, 1, 0);
 rysujModel("teren"); // malowanie pod³o¿a
-rysujModel("niebo"); // malowanie nieba
+//rysujModel("niebo"); // malowanie nieba
 glPopMatrix();
 
 
