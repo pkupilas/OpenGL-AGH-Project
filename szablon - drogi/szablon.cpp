@@ -359,7 +359,7 @@ void rysujRamke(bool prawa)
 
 	#define _RYSOWANIE
 	#include "rysowanie.cpp"	// rysowanie 
-
+	  //=====================Light 0===============================================
 	GLfloat	 lightPos0[4] = { 30,30,-30,1 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 	glEnable(GL_LIGHT0);  // œwiatlo sceny
@@ -372,14 +372,14 @@ void rysujRamke(bool prawa)
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
+	//=====================Light 1===============================================
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos0);
 	glEnable(GL_LIGHT1);  // œwiatlo sceny
 						  //	cycleLight -= 0.01f;
 	GLfloat light_ambient1[] = { 0, 0, 0, 1.0 };
 	GLfloat light_diffuse1[] = { lightNight, lightNight, lightNight, lightNight };
 	GLfloat light_specular1[] = { lightNight, lightNight, lightNight, lightNight };
-	GLfloat light_position1[] = { 30,30,-30,1 };
+	GLfloat light_position1[] = { 30,30,-35,1 };
 	GLfloat spot_direction1[] = { -1.0, -1.0, 0.0 };
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient1);
@@ -390,11 +390,123 @@ void rysujRamke(bool prawa)
 
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 30.0);
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction1);
+	//=====================Light 2===============================================
 
+	glLightfv(GL_LIGHT2, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT2);  // œwiatlo sceny
+	GLfloat light_ambient2[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse2[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula2[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position2[] = { 30,30,-15,1 };
+	GLfloat spot_direction2[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient2);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse2);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, light_specula2);
+	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot_direction2);
+	//=====================Light 3===============================================
+	glLightfv(GL_LIGHT3, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT3);  // œwiatlo sceny
+	GLfloat light_ambient3[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse3[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula3[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position3[] = { 30,30,5,1 };
+	GLfloat spot_direction3[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient3);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse3);
+	glLightfv(GL_LIGHT3, GL_SPECULAR, light_specula3);
+	glLightfv(GL_LIGHT3, GL_POSITION, light_position3);
+	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot_direction3);
+	//=====================Light 4===============================================
+	glLightfv(GL_LIGHT4, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT4);  // œwiatlo sceny
+	GLfloat light_ambient4[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse4[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula4[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position4[] = { 30,30,20,1 };
+	GLfloat spot_direction4[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient4);
+	glLightfv(GL_LIGHT4, GL_DIFFUSE, light_diffuse4);
+	glLightfv(GL_LIGHT4, GL_SPECULAR, light_specula4);
+	glLightfv(GL_LIGHT4, GL_POSITION, light_position4);
+	glLightf(GL_LIGHT4, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, spot_direction4);
+	//=====================Light 5===============================================
+	glLightfv(GL_LIGHT5, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT5);  // œwiatlo sceny
+	GLfloat light_ambient5[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse5[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula5[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position5[] = { 30,30,40,1 };
+	GLfloat spot_direction5[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient5);
+	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse5);
+	glLightfv(GL_LIGHT5, GL_SPECULAR, light_specula5);
+	glLightfv(GL_LIGHT5, GL_POSITION, light_position5);
+	glLightf(GL_LIGHT5, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spot_direction5);
+	//=====================Light 6===============================================
+	glLightfv(GL_LIGHT6, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT6);  // œwiatlo sceny
+	GLfloat light_ambient6[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse6[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula6[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position6[] = { 30,30,58,1 };
+	GLfloat spot_direction6[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT6, GL_AMBIENT, light_ambient6);
+	glLightfv(GL_LIGHT6, GL_DIFFUSE, light_diffuse6);
+	glLightfv(GL_LIGHT6, GL_SPECULAR, light_specula6);
+	glLightfv(GL_LIGHT6, GL_POSITION, light_position6);
+	glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, spot_direction6);
+	//=====================Light 7===============================================
+	glLightfv(GL_LIGHT7, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT7);  // œwiatlo sceny
+	GLfloat light_ambient7[] = { 0, 0, 0, 1.0 };
+	GLfloat light_diffuse7[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_specula7[] = { lightNight, lightNight, lightNight, lightNight };
+	GLfloat light_position7[] = { 30,30,76,1 };
+	GLfloat spot_direction7[] = { -1.0, -1.0, 0.0 };
+
+
+	glLightfv(GL_LIGHT7, GL_AMBIENT, light_ambient7);
+	glLightfv(GL_LIGHT7, GL_DIFFUSE, light_diffuse7);
+	glLightfv(GL_LIGHT7, GL_SPECULAR, light_specula7);
+	glLightfv(GL_LIGHT7, GL_POSITION, light_position7);
+	glLightf(GL_LIGHT7, GL_SPOT_EXPONENT, 128);
+
+	glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, 30.0);
+	glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, spot_direction7);
+	
+	//=====================DAY/NIGHT COUNT=========================
 	lightDay = (sin(timeOfDay) / 2) + 0.5f;
 	lightNight = 1.0 - lightDay;
 	timeOfDay += 0.05;
-
+	//lightDay = 0;
+	//lightNight = 1.0;
+	//=====================DRAW SKYBOX=========================
 	Draw_Skybox(0, 0, 0, 500, 500, 500);	// Draw the Skybox
 	
 	glDeleteTextures(1, &SkyboxTexture[SKYBACK]);
