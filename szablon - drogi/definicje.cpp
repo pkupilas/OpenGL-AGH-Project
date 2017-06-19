@@ -35,13 +35,15 @@
 	float pigVelocity = 0.1;
 	float pigAngle = 0.1;
 	bool pigTurn = false;
+	float turnBackAngle = 0.0f;
+	float turnBackAngleHorse = 90.0f;
 	float angPig[] = { 0 };
 	float posPig[] = { 1.0 };
 	// PIGS -----------------------------
 
 	// HORSES ---------------------------
 	Direction horseDir = FRONT;
-	float horseVelocity = 0.1;
+	float horseVelocity = 0.2;
 	float angHorse[] = { 0, 0 };
 	float posHorse[] = { 1.0, 1.0 };
 	// HORSES ---------------------------

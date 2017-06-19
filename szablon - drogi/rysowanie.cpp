@@ -218,6 +218,7 @@ if (pigDir == FRONT)
 	if (posPig[0] < -20)
 	{
 		pigDir = BACK;
+		turnBackAngle = 180;
 	}
 	else
 	{
@@ -229,6 +230,7 @@ else
 	if (posPig[0] > 0)
 	{
 		pigDir = FRONT;
+		turnBackAngle = 0;
 	}
 	else
 	{
@@ -247,6 +249,7 @@ glPopMatrix();
 glPushMatrix();
 	glTranslatef(25, -5, 0);
 	glTranslatef(3, 0, posPig[0]);
+	glRotatef(turnBackAngle, 0, 1, 0);
 	rysujModel("pig");
 glPopMatrix();
 /*------ pigs ----*/
@@ -286,6 +289,8 @@ if (horseDir == FRONT)
 	if (posHorse[0] < -10)
 	{
 		horseDir = BACK;
+		turnBackAngleHorse = 270;
+
 	}
 	else
 	{
@@ -297,6 +302,7 @@ else
 	if (posHorse[0] > 0)
 	{
 		horseDir = FRONT;
+		turnBackAngleHorse = 90;
 	}
 	else
 	{
@@ -306,8 +312,8 @@ else
 
 glPushMatrix();
 	glTranslatef(30, -5, -10);
-	glRotatef(90, 0, 1, 0);
-	glTranslatef(posHorse[0], 0, 3);
+	glTranslatef(1, 0, posHorse[0]);
+	glRotatef(turnBackAngleHorse, 0, 1, 0);
 	rysujModel("horse");
 glPopMatrix();
 

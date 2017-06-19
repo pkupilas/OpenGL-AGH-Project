@@ -503,7 +503,7 @@ void rysujRamke(bool prawa)
 	//=====================DAY/NIGHT COUNT=========================
 	lightDay = (sin(timeOfDay) / 2) + 0.5f;
 	lightNight = 1.0 - lightDay;
-	timeOfDay += 0.05;
+	timeOfDay += 0.025;
 	//lightDay = 0;
 	//lightNight = 1.0;
 	//=====================DRAW SKYBOX=========================
