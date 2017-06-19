@@ -28,17 +28,23 @@
 	bool kierunek = true;
 	float predkosc = 0.35;
 
+	enum Direction { FRONT, BACK };
+
 	// PIGS -----------------------------
+	Direction pigDir = FRONT;
 	float pigVelocity = 0.1;
 	float pigAngle = 0.1;
 	bool pigTurn = false;
-	float pigPosition = 1.0;
-	enum PigDirection { FRONT, BACK };
-	PigDirection pigDir = FRONT;
+	float angPig[] = { 0 };
+	float posPig[] = { 1.0 };
 	// PIGS -----------------------------
 
-
-
+	// HORSES ---------------------------
+	Direction horseDir = FRONT;
+	float horseVelocity = 0.1;
+	float angHorse[] = { 0, 0 };
+	float posHorse[] = { 1.0, 1.0 };
+	// HORSES ---------------------------
 
 	/******************************************************/
 #undef _DEFINICJE
